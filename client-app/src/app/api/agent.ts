@@ -22,8 +22,10 @@ const Activities = {
     create: (activity: IActivity) => requests.post('/activities', activity),
     update: (activity: IActivity) => requests.put(`/activities/${activity.id}`, activity),
     delete: (id: string) => requests.del(`/activities/${id}`)
-}
+};
 
-export default {
+const agent = {
     Activities
 }
+
+export default agent;
