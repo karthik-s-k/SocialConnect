@@ -1,0 +1,8 @@
+Reset Data:
+
+Step 1: Drop database
+dotnet ef database drop -p Persistence/ -s API/
+
+Step 2: Restart service:
+cd API/
+dotnet watch run

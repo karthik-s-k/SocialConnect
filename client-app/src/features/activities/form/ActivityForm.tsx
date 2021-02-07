@@ -8,9 +8,10 @@ setEditMode: (editMode: boolean) => void;
 activity: IActivity;
 createActivity: (activity: IActivity) => void;
 editActivity: (activity: IActivity) => void;
+submitting: boolean;
 }
 
-export const ActivityForm: React.FC<IProps> = ({setEditMode, activity: initialFormstate, createActivity, editActivity}) => {
+export const ActivityForm: React.FC<IProps> = ({setEditMode, activity: initialFormstate, createActivity, editActivity, submitting}) => {
 
     const initializeForm = () => {
         if(initialFormstate) {
@@ -91,7 +92,7 @@ export const ActivityForm: React.FC<IProps> = ({setEditMode, activity: initialFo
                     placeholder='Venue'
                     value={activity.venue}
                 />
-                <Button floated='right' positive type='submit' content='Submit' />
+                <Button loading={submitting} floated='right' positive type='submit' content='Submit' />
                 <Button
                     onClick={() => setEditMode(false)}
                     floated='right'
