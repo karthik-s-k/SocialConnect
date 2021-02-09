@@ -6,3 +6,9 @@ dotnet ef database drop -p Persistence/ -s API/
 Step 2: Restart service:
 cd API/
 dotnet watch run
+
+
+Create secret key locally:
+dotnet user-secrets init -p API/ -> creates a GUID as user secret key in API project file
+dotnet user-secrets set "TokenKey" "KEY GOES HERE" -p API/ -> Used to add a key
+dotnet user-secrets list -p API/ -> to list stored keys
