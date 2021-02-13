@@ -8,15 +8,15 @@ interface IProps
     FormFieldProps {}
 
 const DateInput: React.FC<IProps> = ({
- input,
- width,
- id = null,
- placeholder,
- date = false,
- time = false,
- meta: { touched, error },
- ...rest
-}) => {
+    input,
+    width,
+    id = null,
+    placeholder,
+    date = false,
+    time = false,
+    meta: { touched, error },
+    ...rest
+  }) => {
     return (
         <Form.Field error={touched && !!error} width={width}>
         <DateTimePicker 
