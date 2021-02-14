@@ -1,4 +1,8 @@
-Reset Data:
+Run API (@API folder):
+dotnet watch run
+
+
+Reset Data (@root level):
 
 Step 1: Drop database
 dotnet ef database drop -p Persistence/ -s API/
@@ -8,7 +12,18 @@ cd API/
 dotnet watch run
 
 
-Create secret key locally:
+Create secret key locally (@root level):
 dotnet user-secrets init -p API/ -> creates a GUID as user secret key in API project file
 dotnet user-secrets set "TokenKey" "KEY GOES HERE" -p API/ -> Used to add a key
 dotnet user-secrets list -p API/ -> to list stored keys
+
+
+dotnet user-secrets set "Cloudinary:CloudName" "KEY GOES HERE"
+dotnet user-secrets set "Cloudinary:ApiKey" "KEY GOES HERE"
+dotnet user-secrets set "Cloudinary:ApiSecret" "KEY GOES HERE"
+
+dotnet user-secrets list
+
+
+Add new migrations (@root level):
+dotnet ef migrations add "NAME GOES HERE" -p Persistence/ -s API/
