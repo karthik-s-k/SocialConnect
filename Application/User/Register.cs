@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Errors;
@@ -10,6 +11,7 @@ using Domain;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -63,17 +65,14 @@ namespace Application.User
                     UserName = request.Username
                 };
 
+                var refreshToken = _jwtGenerator.GenerateRefreshToken();
+                user.RefreshTokens.Add(refreshToken);
+
                 var result = await _userManager.CreateAsync(user, request.Password);
 
                 if (result.Succeeded)
                 {
-                    return new User
-                    {
-                        DisplayName = user.DisplayName,
-                        Token = _jwtGenerator.CreateToken(user),
-                        Username = user.UserName,
-                        Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
-                    };
+                    return new User(user, _jwtGenerator, refreshToken.Token);
                 }
 
                 throw new Exception("Problem creating user");
