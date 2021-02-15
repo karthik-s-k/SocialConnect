@@ -119,6 +119,22 @@ namespace API
         {
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
+            //security
+            app.UseXContentTypeOptions();//prevents content sniffing
+            app.UseReferrerPolicy(opt => opt.NoReferrer());//prevents ammount of data shared with other sites when referring
+            app.UseXXssProtection(opt => opt.EnabledWithBlockMode());//prevents reflected cross site scripting attacks
+            app.UseXfo(opt => opt.Deny());//prevents click jacking and iframes
+            app.UseCsp(opt => opt
+                    .BlockAllMixedContent()//blocks http content using https site
+                    .StyleSources(s => s.Self()
+                        .CustomSources("https://fonts.googleapis.com", "sha256-4Su6mBWzEIFnH4pAGMOuaeBrstwJN4Z3pq/s1Kn4/KQ=", "sha256-F4GpCPyRepgP5znjMD8sc7PEjzet5Eef4r09dEGPpTs="))
+                    .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
+                    .FormActions(s => s.Self())
+                    .FrameAncestors(s => s.Self())
+                    .ImageSources(s => s.Self().CustomSources("https://res.cloudinary.com", "blob:", "data:"))
+                    .ScriptSources(s => s.Self().CustomSources("sha256-BtiWlllXIdcN/vrWcVa0YMIqh3c3WjBSBrx/aFpEyLs="))
+                );//content security policy
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
